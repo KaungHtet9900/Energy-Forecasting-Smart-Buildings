@@ -1,0 +1,53 @@
+{
+  "n_buildings": 60,
+  "n_sites": 16,
+  "sites": [
+    "Bear",
+    "Bobcat",
+    "Bull",
+    "Cockatoo",
+    "Crow",
+    "Eagle",
+    "Fox",
+    "Gator",
+    "Hog",
+    "Lamb",
+    "Moose",
+    "Mouse",
+    "Peacock",
+    "Rat",
+    "Robin",
+    "Wolf"
+  ],
+  "n_rows": 1052640,
+  "date_min": "2016-01-01 00:00:00",
+  "date_max": "2017-12-31 23:00:00",
+  "usages": {
+    "Education": 27,
+    "Lodging/residential": 10,
+    "Office": 6,
+    "Public services": 5,
+    "Entertainment/public assembly": 4,
+    "Healthcare": 4,
+    "Manufacturing/industrial": 1,
+    "Other": 1,
+    "Services": 1,
+    "Retail": 1
+  },
+  "target_missing_frac": 0.02382580939352485,
+  "columns": [
+    "timestamp",
+    "building_id",
+    "meter_reading",
+    "site_id",
+    "primaryspaceusage",
+    "sqm",
+    "yearbuilt",
+    "timezone",
+    "airTemperature",
+    "dewTemperature",
+    "windSpeed",
+    "cloudCoverage",
+    "seaLvlPressure"
+  ]
+}

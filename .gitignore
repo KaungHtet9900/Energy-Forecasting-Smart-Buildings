@@ -1,7 +1,8 @@
 # Data (large; reproducible via src/data/download.py)
 data/raw/
+# keep the tiny subset summary (needed by the deployed dashboard), drop the rest
 data/interim/*
-!data/interim/subset_summary.json   # tiny; needed by the deployed dashboard
+!data/interim/subset_summary.json
 data/processed/
 
 # Model artifacts & results binaries
