@@ -1,0 +1,48 @@
+{
+  "tft_static_importance": {
+    "log_sqm_z": 0.12890000641345978,
+    "yearbuilt_z": 0.08470000326633453,
+    "yearbuilt_missing": 0.13420000672340393,
+    "use_Education": 0.1429000049829483,
+    "use_Entertainment/public assembly": 0.0722000002861023,
+    "use_Healthcare": 0.05270000174641609,
+    "use_Lodging/residential": 0.05570000037550926,
+    "use_Manufacturing/industrial": 0.05820000171661377,
+    "use_Office": 0.08500000089406967,
+    "use_Other": 0.04800000041723251,
+    "use_Public services": 0.05420000106096268,
+    "use_Retail": 0.033900000154972076,
+    "use_Services": 0.049400001764297485
+  },
+  "tft_encoder_importance": {
+    "y_scaled": 0.6891000270843506,
+    "hour_sin": 0.025800000876188278,
+    "hour_cos": 0.05169999971985817,
+    "dow_sin": 0.021800000220537186,
+    "dow_cos": 0.022099999710917473,
+    "month_sin": 0.017400000244379044,
+    "month_cos": 0.026100000366568565,
+    "is_weekend": 0.022600000724196434,
+    "is_holiday": 0.021299999207258224,
+    "airTemperature": 0.020500000566244125,
+    "dewTemperature": 0.01759999990463257,
+    "windSpeed": 0.021400000900030136,
+    "cloudCoverage": 0.02199999988079071,
+    "seaLvlPressure": 0.020600000396370888
+  },
+  "tft_decoder_importance": {
+    "hour_sin": 0.09539999812841415,
+    "hour_cos": 0.17489999532699585,
+    "dow_sin": 0.06109999865293503,
+    "dow_cos": 0.06350000202655792,
+    "month_sin": 0.03400000184774399,
+    "month_cos": 0.12549999356269836,
+    "is_weekend": 0.13600000739097595,
+    "is_holiday": 0.08780000358819962,
+    "airTemperature": 0.0632999986410141,
+    "dewTemperature": 0.03959999978542328,
+    "windSpeed": 0.025499999523162842,
+    "cloudCoverage": 0.0406000018119812,
+    "seaLvlPressure": 0.05270000174641609
+  }
+}

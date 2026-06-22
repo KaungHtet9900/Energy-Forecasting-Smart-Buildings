@@ -1,0 +1,111 @@
+# ============================================================================
+# Central configuration for:
+# "Interpretable Attention-Based Deep Learning for Short-Term Building Energy
+#  Forecasting: A Comparative Study on the Building Data Genome 2 Dataset"
+# ============================================================================
+
+seed: 42
+
+paths:
+  raw_bdg2: data/raw/bdg2
+  raw_gepiii: data/raw/gepiii
+  interim: data/interim
+  processed: data/processed
+  results: results
+  figures: results/figures
+  tables: results/tables
+  models: results/models
+  interpret: results/interpret
+  reports: reports
+  logs: logs
+
+# ---------------------------------------------------------------------------
+# Data acquisition
+# ---------------------------------------------------------------------------
+download:
+  bdg2_base: "https://media.githubusercontent.com/media/buds-lab/building-data-genome-project-2/master"
+  bdg2_files:
+    metadata: "data/metadata/metadata.csv"
+    weather: "data/weather/weather.csv"
+    electricity: "data/meters/cleaned/electricity_cleaned.csv"
+    # optional extra meters (uncomment to fetch):
+    # chilledwater: "data/meters/cleaned/chilledwater_cleaned.csv"
+    # steam: "data/meters/cleaned/steam_cleaned.csv"
+  gepiii_competition: "ashrae-energy-prediction"
+
+# ---------------------------------------------------------------------------
+# Subset selection (CPU-tractable). Filled/validated in Phase 2.
+# Strategy: pick high-completeness electricity meters across a few sites.
+# ---------------------------------------------------------------------------
+data:
+  meter: electricity
+  # If sites is null, pick automatically by completeness up to max_buildings.
+  sites: null                 # e.g. ["Panther", "Fox", "Robin"]
+  max_buildings: 60           # scaled-up subset (proven pipeline); ~4 per site
+  min_completeness: 0.90      # fraction of non-missing hours required
+  min_mean_kwh: 1.0           # drop near-dead meters
+  # Analysis window (BDG2 covers 2016-2017, hourly, local time per site)
+  start: "2016-01-01"
+  end: "2017-12-31 23:00:00"
+
+# ---------------------------------------------------------------------------
+# Forecasting task
+# ---------------------------------------------------------------------------
+task:
+  lookback: 168               # hours of history (7 days)
+  horizon: 24                 # hours ahead (day-ahead)
+  stride: 24                  # window step (non-overlapping day starts)
+  target: meter_reading       # electricity kWh
+  target_transform: log1p     # stabilize variance; inverse on output
+
+split:
+  # chronological, no leakage
+  train_end: "2017-08-31 23:00:00"
+  val_end:   "2017-10-31 23:00:00"
+  # test = remainder up to data.end
+
+# ---------------------------------------------------------------------------
+# Features
+# ---------------------------------------------------------------------------
+features:
+  calendar: [hour, dayofweek, month, is_weekend, is_holiday]
+  cyclical: true              # encode hour/dow/month as sin/cos
+  weather: [airTemperature, dewTemperature, windSpeed, cloudCoverage, seaLvlPressure]
+  lags: [24, 168]             # extra explicit lag features for tree/linear models
+  rolling: [24, 168]          # rolling mean windows for tree/linear models
+  static: [primaryspaceusage, sqm, yearbuilt]   # building covariates
+  holidays_country: US        # most BDG2 sites are US/UK; refined per-site in code
+
+# ---------------------------------------------------------------------------
+# Training (shared)
+# ---------------------------------------------------------------------------
+train:
+  batch_size: 128
+  epochs: 40
+  patience: 7                 # early stopping
+  lr: 0.001
+  weight_decay: 0.0001
+  grad_clip: 1.0
+  num_workers: 0              # Windows-safe
+  loss: mae                   # robust; report RMSE/MAE/etc separately
+
+# ---------------------------------------------------------------------------
+# Model hyperparameters
+# ---------------------------------------------------------------------------
+models:
+  lstm:      {hidden: 128, layers: 1, dropout: 0.1}
+  gru:       {hidden: 128, layers: 1, dropout: 0.1}
+  tcn:       {channels: [64, 64, 64], kernel: 3, dropout: 0.1}
+  cnn_lstm:  {cnn_channels: 64, kernel: 3, hidden: 128, layers: 1, dropout: 0.1}
+  transformer: {d_model: 64, nhead: 4, layers: 2, ff: 128, dropout: 0.1}
+  attn_lstm: {hidden: 128, layers: 1, attn_dim: 64, dropout: 0.1}
+  tft:       {d_model: 64, nhead: 4, lstm_layers: 1, dropout: 0.1, hidden_continuous: 32}
+
+# ---------------------------------------------------------------------------
+# External validation
+# ---------------------------------------------------------------------------
+external:
+  enabled: true                     # GEPIII external validation via Kaggle dataset mirror
+  exclude_overlap_with_bdg2: true   # drop GEPIII buildings present in BDG2 training set
+  finetune: true                    # also report fine-tuned transfer
+  gepiii_mirror: "sumit261124/ashrae-great-energy-predictor-iii-dataset"

@@ -1,0 +1,5 @@
+# Slim dependencies for the deployed Streamlit dashboard (Streamlit Community Cloud).
+# The dashboard only reads pre-computed CSV/PNG/markdown artifacts -- no ML libs needed.
+# For the full research pipeline (data, models, export) use: requirements-full.txt
+streamlit>=1.30
+pandas>=2.1

@@ -1,0 +1,37 @@
+# Data (large; reproducible via src/data/download.py)
+data/raw/
+data/interim/*
+!data/interim/subset_summary.json   # tiny; needed by the deployed dashboard
+data/processed/
+
+# Model artifacts & results binaries
+results/models/
+*.pt
+*.pth
+*.ckpt
+*.joblib
+*.pkl
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+logs/
+*.log
+
+# Local Claude settings (keep launch.json, ignore machine-local settings)
+.claude/settings.local.json
+
+# Keep figure/table outputs tracked (small), but ignore scratch
+results/figures/_scratch/

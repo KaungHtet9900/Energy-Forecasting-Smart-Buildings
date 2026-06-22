@@ -1,0 +1,12 @@
+model,RMSE_skill_%,MAE_skill_%
+Persistence,-50.7,-80.7
+Seasonal-naive,0.0,0.0
+Ridge,-0.93,-6.26
+LightGBM,23.38,27.64
+LSTM,6.24,9.38
+GRU,17.32,21.24
+TCN,16.25,13.18
+CNN-LSTM,15.93,18.89
+Transformer,23.19,30.45
+Attn-LSTM,21.36,28.6
+TFT,17.75,23.38
